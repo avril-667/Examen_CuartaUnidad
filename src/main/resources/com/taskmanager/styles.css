@@ -1,0 +1,432 @@
+/* ============================================================
+   ESTILOS PARA GESTOR DE TAREAS ACADÉMICAS - JavaFX
+   ============================================================ */
+
+/* --- PALETA DE COLORES --- */
+.root {
+    /* Colores principales */
+    -fx-primary: #2563eb;        /* Azul principal */
+    -fx-primary-hover: #1d4ed8;
+    -fx-primary-pressed: #1e40af;
+
+    -fx-secondary: #64748b;      /* Gris pizarra */
+    -fx-secondary-hover: #475569;
+
+    -fx-danger: #dc2626;         /* Rojo para eliminar */
+    -fx-danger-hover: #b91c1c;
+
+    -fx-success: #16a34a;        /* Verde éxito */
+    -fx-warning: #ea580c;        /* Naranja advertencia */
+
+    /* Fondos */
+    -fx-bg-main: #f8fafc;        /* Fondo principal */
+    -fx-bg-panel: #ffffff;       /* Fondo paneles */
+    -fx-bg-hover: #f1f5f9;       /* Hover en filas */
+
+    /* Textos */
+    -fx-text-primary: #1e293b;   /* Texto principal */
+    -fx-text-secondary: #64748b; /* Texto secundario */
+    -fx-text-muted: #94a3b8;     /* Texto atenuado */
+
+    /* Bordes */
+    -fx-border-light: #e2e8f0;
+    -fx-border-focus: #2563eb;
+
+    /* Sombras */
+    -fx-shadow: rgba(0, 0, 0, 0.08);
+    -fx-shadow-hover: rgba(0, 0, 0, 0.12);
+
+    /* Radio de esquinas */
+    -fx-radius-sm: 4;
+    -fx-radius-md: 8;
+    -fx-radius-lg: 12;
+
+    /* Espaciado */
+    -fx-spacing-xs: 4;
+    -fx-spacing-sm: 8;
+    -fx-spacing-md: 12;
+    -fx-spacing-lg: 16;
+
+    /* Fuente base */
+    -fx-font-family: "Segoe UI", "Inter", "Roboto", sans-serif;
+    -fx-font-size: 13px;
+}
+
+/* ============================================================
+   LAYOUT PRINCIPAL
+   ============================================================ */
+.root {
+    -fx-background-color: -fx-bg-main;
+}
+
+.header-bar {
+    -fx-background-color: -fx-bg-panel;
+    -fx-border-color: transparent transparent -fx-border-light transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.title-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.main-content {
+    -fx-background-color: -fx-bg-main;
+}
+
+.form-panel {
+    -fx-background-color: -fx-bg-panel;
+    -fx-border-color: transparent -fx-border-light transparent transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-effect: dropshadow(gaussian, -fx-shadow, 10, 0, 2, 0);
+}
+
+.form-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.form-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.section-title-small {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* ============================================================
+   CAMPOS DE FORMULARIO
+   ============================================================ */
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.field-label-small {
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.text-field, .text-area, .date-picker, .combo-box {
+    -fx-background-color: -fx-bg-panel;
+    -fx-border-color: -fx-border-light;
+    -fx-border-radius: -fx-radius-md;
+    -fx-background-radius: -fx-radius-md;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.text-field:focused, .text-area:focused, .date-picker:focused, .combo-box:focused {
+    -fx-border-color: -fx-border-focus;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, -fx-shadow, 6, 0, 0, 0);
+}
+
+.text-area {
+    -fx-pref-height: 80px;
+    -fx-min-height: 80px;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 6 10;
+}
+
+.combo-box .list-cell:filled:selected, .combo-box .list-cell:filled:hover {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+}
+
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: -fx-primary;
+    -fx-background-radius: 0 -fx-radius-md -fx-radius-md 0;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.button {
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-padding: 10 16;
+    -fx-background-radius: -fx-radius-md;
+    -fx-cursor: hand;
+    -fx-transition: all 0.15s ease;
+}
+
+.btn-primary {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+}
+
+.btn-primary:hover {
+    -fx-background-color: -fx-primary-hover;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-hover, 8, 0, 0, 2);
+}
+
+.btn-primary:pressed {
+    -fx-background-color: -fx-primary-pressed;
+    -fx-effect: none;
+}
+
+.btn-primary:disabled {
+    -fx-background-color: #93c5fd;
+    -fx-text-fill: #dbeafe;
+    -fx-cursor: default;
+}
+
+.btn-secondary {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: white;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: -fx-secondary-hover;
+}
+
+.btn-secondary:disabled {
+    -fx-background-color: #cbd5e1;
+    -fx-text-fill: #e2e8f0;
+    -fx-cursor: default;
+}
+
+.btn-danger {
+    -fx-background-color: -fx-danger;
+    -fx-text-fill: white;
+}
+
+.btn-danger:hover {
+    -fx-background-color: -fx-danger-hover;
+}
+
+.btn-danger:disabled {
+    -fx-background-color: #fca5a5;
+    -fx-text-fill: #fee2e2;
+    -fx-cursor: default;
+}
+
+.btn-outline {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-primary;
+    -fx-border-color: -fx-primary;
+    -fx-border-width: 1.5;
+}
+
+.btn-outline:hover {
+    -fx-background-color: #eff6ff;
+    -fx-border-color: -fx-primary-hover;
+}
+
+.btn-outline:pressed {
+    -fx-background-color: #dbeafe;
+}
+
+/* ============================================================
+   BARRA DE FILTROS
+   ============================================================ */
+.filter-bar {
+    -fx-background-color: -fx-bg-panel;
+    -fx-border-color: transparent transparent -fx-border-light transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.filter-bar .combo-box, .filter-bar .text-field {
+    -fx-pref-height: 36px;
+}
+
+/* ============================================================
+   TABLA DE TAREAS
+   ============================================================ */
+.task-table {
+    -fx-background-color: -fx-bg-panel;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: -fx-border-light;
+    -fx-font-size: 13px;
+}
+
+.task-table .column-header-background {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: transparent transparent -fx-border-light transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.task-table .column-header .label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-padding: 10 8;
+}
+
+.task-table .table-cell {
+    -fx-padding: 10 8;
+    -fx-border-color: transparent transparent -fx-border-light transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.task-table .table-row-cell {
+    -fx-background-color: -fx-bg-panel;
+}
+
+.task-table .table-row-cell:odd {
+    -fx-background-color: #fafbfc;
+}
+
+.task-table .table-row-cell:selected {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: -fx-primary;
+}
+
+.task-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: -fx-primary;
+}
+
+.task-table .table-row-cell:hover {
+    -fx-background-color: -fx-bg-hover;
+}
+
+/* Scrollbar personalizada */
+.task-table .scroll-bar:vertical {
+    -fx-pref-width: 8px;
+    -fx-background-color: transparent;
+}
+
+.task-table .scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 4;
+}
+
+.task-table .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #94a3b8;
+}
+
+.task-table .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.placeholder-box {
+    -fx-padding: 40;
+    -fx-alignment: center;
+}
+
+.placeholder-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.placeholder-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-muted;
+    -fx-max-width: 300px;
+}
+
+/* ============================================================
+   PANEL DE ESTADÍSTICAS
+   ============================================================ */
+.stats-panel {
+    -fx-padding: 10 0 0 0;
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-padding: 4 0;
+}
+
+.stat-label.warning {
+    -fx-text-fill: -fx-warning;
+    -fx-font-weight: 600;
+}
+
+/* ============================================================
+   BARRA DE ESTADO
+   ============================================================ */
+.status-bar {
+    -fx-background-color: -fx-bg-panel;
+    -fx-border-color: -fx-border-light transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.status-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.hint-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-text-muted;
+    -fx-font-style: italic;
+}
+
+/* ============================================================
+   ALERTAS Y DIÁLOGOS
+   ============================================================ */
+.dialog-pane {
+    -fx-background-color: -fx-bg-panel;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: transparent;
+}
+
+.dialog-pane .content.label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-min-width: 80px;
+}
+
+/* ============================================================
+   ANIMACIONES Y TRANSICIONES
+   ============================================================ */
+.text-field, .text-area, .combo-box, .date-picker, .button {
+    -fx-transition: all 0.15s ease;
+}
+
+/* Focus visible para accesibilidad */
+.button:focused, .text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-effect: dropshadow(gaussian, -fx-border-focus, 0, 0, 0, 0);
+    -fx-border-color: -fx-border-focus;
+    -fx-border-width: 2;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .root {
+        -fx-border-light: #000;
+        -fx-border-focus: #000;
+    }
+    .btn-outline {
+        -fx-border-width: 2;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        -fx-transition: none !important;
+    }
+}

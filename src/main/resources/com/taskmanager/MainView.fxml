@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.taskmanager.controller.MainController"
+            prefWidth="1100" prefHeight="700"
+            stylesheets="@styles.css">
+
+    <!-- ==================== BARRA SUPERIOR - TÍTULO ==================== -->
+    <top>
+        <VBox spacing="5" padding="15" styleClass="header-bar">
+            <Label text="📚 Gestor de Tareas Académicas" styleClass="title-label"/>
+            <Separator/>
+        </VBox>
+    </top>
+
+    <!-- ==================== PANEL IZQUIERDO - FORMULARIO ==================== -->
+    <left>
+        <VBox spacing="10" padding="15" prefWidth="380" maxWidth="380" minWidth="350" styleClass="form-panel">
+            <Label text="📝 Formulario de Tarea" styleClass="section-title"/>
+
+            <ScrollPane fitToWidth="true" styleClass="form-scroll" VBox.vgrow="ALWAYS">
+                <VBox spacing="12" padding="5">
+
+                    <!-- Título -->
+                    <VBox spacing="3">
+                        <Label text="Título *" styleClass="field-label"/>
+                        <TextField fx:id="txtTitulo" promptText="Título de la tarea..." styleClass="text-field"/>
+                    </VBox>
+
+                    <!-- Materia -->
+                    <VBox spacing="3">
+                        <Label text="Materia / Asignatura *" styleClass="field-label"/>
+                        <TextField fx:id="txtMateria" promptText="Ej: Matemáticas, Física, Historia..." styleClass="text-field"/>
+                    </VBox>
+
+                    <!-- Descripción -->
+                    <VBox spacing="3">
+                        <Label text="Descripción" styleClass="field-label"/>
+                        <TextArea fx:id="txtDescripcion" promptText="Detalles, requisitos, notas..."
+                                  wrapText="true" prefRowCount="3" styleClass="text-area"/>
+                    </VBox>
+
+                    <!-- Fecha de Entrega -->
+                    <VBox spacing="3">
+                        <Label text="Fecha de Entrega *" styleClass="field-label"/>
+                        <DatePicker fx:id="dpFechaEntrega" promptText="Seleccionar fecha" styleClass="date-picker"/>
+                    </VBox>
+
+                    <!-- Prioridad -->
+                    <VBox spacing="3">
+                        <Label text="Prioridad *" styleClass="field-label"/>
+                        <ComboBox fx:id="cbPrioridad" styleClass="combo-box"/>
+                    </VBox>
+
+                    <!-- Estado -->
+                    <VBox spacing="3">
+                        <Label text="Estado *" styleClass="field-label"/>
+                        <ComboBox fx:id="cbEstado" styleClass="combo-box"/>
+                    </VBox>
+
+                </VBox>
+            </ScrollPane>
+
+            <Separator/>
+
+            <!-- Botonera principal -->
+            <VBox spacing="8" padding="5 0 0 0">
+                <Button fx:id="btnAgregar" text="➕ Agregar Tarea"
+                        styleClass="btn-primary" maxWidth="Infinity" defaultButton="true"/>
+                <Button fx:id="btnEditar" text="✏️ Editar"
+                        styleClass="btn-secondary" maxWidth="Infinity"/>
+                <Button fx:id="btnEliminar" text="🗑️ Eliminar"
+                        styleClass="btn-danger" maxWidth="Infinity" disable="true"/>
+                <Button fx:id="btnLimpiar" text="🧹 Limpiar Campos"
+                        styleClass="btn-outline" maxWidth="Infinity"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Estadísticas rápidas -->
+            <VBox spacing="5" styleClass="stats-panel">
+                <Label text="📊 Resumen" styleClass="section-title-small"/>
+                <Label fx:id="lblTotalTareas" text="Total: 0" styleClass="stat-label"/>
+                <Label fx:id="lblPendientes" text="Pendientes: 0" styleClass="stat-label"/>
+                <Label fx:id="lblVencidas" text="Vencidas: 0" styleClass="stat-label warning"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ==================== PANEL CENTRAL - TABLA Y FILTROS ==================== -->
+    <center>
+        <VBox spacing="0" styleClass="main-content">
+
+            <!-- Barra de búsqueda y filtros -->
+            <VBox spacing="10" padding="15" styleClass="filter-bar">
+                <Label text="🔍 Buscar y Filtrar" styleClass="section-title"/>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <!-- Búsqueda por texto -->
+                    <VBox spacing="3">
+                        <Label text="Buscar (título/descripción)" styleClass="field-label-small"/>
+                        <TextField fx:id="txtBuscar" promptText="Escriba para filtrar..."
+                                   prefWidth="250" styleClass="text-field"/>
+                    </VBox>
+
+                    <!-- Filtro Materia -->
+                    <VBox spacing="3">
+                        <Label text="Materia" styleClass="field-label-small"/>
+                        <ComboBox fx:id="cbFiltroMateria" prefWidth="180" styleClass="combo-box"/>
+                    </VBox>
+
+                    <!-- Filtro Estado -->
+                    <VBox spacing="3">
+                        <Label text="Estado" styleClass="field-label-small"/>
+                        <ComboBox fx:id="cbFiltroEstado" prefWidth="150" styleClass="combo-box"/>
+                    </VBox>
+
+                    <!-- Filtro Prioridad -->
+                    <VBox spacing="3">
+                        <Label text="Prioridad" styleClass="field-label-small"/>
+                        <ComboBox fx:id="cbFiltroPrioridad" prefWidth="130" styleClass="combo-box"/>
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button fx:id="btnLimpiarFiltros" text="✖ Limpiar Filtros"
+                            styleClass="btn-outline"/>
+                </HBox>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Tabla de tareas -->
+            <TableView fx:id="tablaTareas" VBox.vgrow="ALWAYS" styleClass="task-table">
+                <columns>
+                    <TableColumn fx:id="colTitulo" text="Título" prefWidth="220" minWidth="150">
+                        <cellFactory>
+                            <fx:factory>
+                                <javafx.scene.control.cell.TextFieldTableCell fx:factory="forTableColumn"/>
+                            </fx:factory>
+                        </cellFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colMateria" text="Materia" prefWidth="150" minWidth="120"/>
+                    <TableColumn fx:id="colFechaEntrega" text="Fecha Entrega" prefWidth="130" minWidth="110"/>
+                    <TableColumn fx:id="colPrioridad" text="Prioridad" prefWidth="100" minWidth="90"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="130" minWidth="110"/>
+                </columns>
+
+                <placeholder>
+                    <VBox alignment="CENTER" spacing="10" styleClass="placeholder-box">
+                        <Label text="📭 No hay tareas registradas" styleClass="placeholder-title"/>
+                        <Label text="Use el formulario de la izquierda para agregar su primera tarea"
+                               styleClass="placeholder-text" wrapText="true" textAlignment="CENTER"/>
+                    </VBox>
+                </placeholder>
+            </TableView>
+
+            <!-- Barra de estado inferior -->
+            <HBox padding="10,15" alignment="CENTER_LEFT" spacing="20" styleClass="status-bar">
+                <Label fx:id="lblStatus" text="Listo" styleClass="status-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Doble clic en una fila para editar" styleClass="hint-label"/>
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

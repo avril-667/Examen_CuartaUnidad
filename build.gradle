@@ -1,0 +1,81 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+group = 'com.taskmanager'
+version = '1.0.0'
+
+// ⚠️ REQUISITO: Java 21+ (JDK 21 o superior)
+// El plugin JavaFX 0.0.13+ requiere Java 11+ (class file version 55+)
+// Java 8 (class file version 52) NO es compatible
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// Verificar versión de Java al configurar
+tasks.withType(JavaCompile).configureEach { task ->
+    def javaVersion = JavaVersion.current().toString()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JavaFX 21 - Requiere Java 17+ (LTS), compatible con Java 21
+    implementation 'org.openjfx:javafx-controls:21.0.6'
+    implementation 'org.openjfx:javafx-fxml:21.0.6'
+
+    // JSON serialization with Jackson (compatible con Java 8+)
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+javafx {
+    version = '21.0.6'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+application {
+    mainClass = 'com.taskmanager.MainApp'
+    mainModule = 'com.taskmanager'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// El plugin JavaFX configura automáticamente el module-path para la tarea run
+// No es necesario configurar jvmArgs manualmente
+
+// Tarea personalizada para crear distribución ejecutable
+task createDistribution(type: Copy) {
+    from jar
+    into 'dist/lib'
+
+    from configurations.runtimeClasspath
+    into 'dist/lib'
+
+    doLast {
+        new File('dist/run.bat').write '''@echo off
+java -cp "lib/*" --module-path lib --add-modules javafx.controls,javafx.fxml com.taskmanager.MainApp
+pause
+'''
+        new File('dist/run.sh').write '''#!/bin/bash
+java -cp "lib/*" --module-path lib --add-modules javafx.controls,javafx.fxml com.taskmanager.MainApp
+'''
+        file('dist/run.sh').setExecutable(true)
+    }
+}
+
+createDistribution.dependsOn jar
